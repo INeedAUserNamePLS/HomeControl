@@ -1,0 +1,117 @@
+<html>
+    
+    <head>
+
+    </head>
+    <body>
+        <div>
+
+        
+            
+            <h1>Rolladen</h1>
+            <label class="input" for="inputrolladen1">TestSlider1</label>
+            <input type="range" min="0" max="100" value="2" orient="vertical" id="inputrolladen1">
+            <input type="text" id="r1" value="2"><!--readonly-->
+
+            <label class="input" for="inputrolladen2">TestSlider1</label>
+            <input type="range" min="0" max="100" value="2" id="inputrolladen2">
+            <input type="text" id="r2" value="2" readonly>
+ 
+            <h1>Licht</h1>
+
+            <label class="input" for="inputlicht1">TestSlider2</label>
+            <input type="range" min="1" max="100" value="50" orient="vertical" id="inputlicht1">
+            <input type="text" id="l1" value="50"><!--readonly-->
+
+            <label class="input" for="inputlicht2">TestSlider4</label>
+            <input type="range" min="1" max="100" value="50" id="inputlicht2">
+            <input type="text" id="l2" value="50" readonly>
+
+
+            <h1>LichtTest</h1>
+
+            
+
+        </div>
+
+        <!-- CSS Temporaer-->
+        <style>
+            input[type=range][orient=vertical]
+            {
+                writing-mode: bt-lr; /* IE */
+                -webkit-appearance: slider-vertical; /* Chromium */
+                width: 8px;
+                height: 175px;
+                padding: 0 5px;
+            }
+            input[type="text"]{
+                width: 32px;
+                
+            }
+            .input{
+                font-size: large;
+            }
+            input[type=text]{
+                border: none;
+                background-color: transparent;
+                resize: none;
+                outline: none;
+            }
+            div{
+                margin-left: 10%;
+                margin-top: 10%;
+            }
+            
+
+        </style>
+        <script>
+            //set to value of the database in the later stages
+            let rolladen;
+            let licht;
+//wenn nichts im textfeld steht geht noch nicht
+            document.getElementById('inputrolladen1').addEventListener('change', function() {
+                rolladen = document.getElementById("inputrolladen1").value;
+                document.getElementById("r1").value =  rolladen;
+            });
+
+            document.getElementById('inputlicht1').addEventListener('change', function() {
+                //if(document.getElementById('l1').value != ""){
+                    licht = document.getElementById("inputlicht1").value;
+                    document.getElementById("l1").value =  licht;
+                //}
+            });
+            
+            document.getElementById('r1').addEventListener('change', function() {
+                rolladen = document.getElementById("r1").value;
+                document.getElementById("inputrolladen1").value =  rolladen;
+            });
+
+            document.getElementById('l1').addEventListener('change', function() {
+                licht = document.getElementById("l1").value;
+                document.getElementById("inputlicht1").value =  licht;
+            });
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            document.getElementById('inputrolladen2').addEventListener('change', function() {
+                rolladen = document.getElementById("inputrolladen2").value;
+                document.getElementById("r2").value =  rolladen;
+            });
+
+            document.getElementById('inputlicht2').addEventListener('change', function() {
+                licht = document.getElementById("inputlicht2").value;
+                document.getElementById("l2").value =  licht;
+            });
+
+
+
+        </script>
+
+
+
+
+
+    </body>
+
+</html>
