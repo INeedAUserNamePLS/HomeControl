@@ -25,46 +25,43 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-dark border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/lights" class="nav-link text-white">Home</a></h5>
+</div>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/lights/">Home <span
-                        class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Lights</h1>
+</div>
 
-<main role="main">
-    <section class="jumbotron text-center">
-        <div class="container">
-            <h1 class="jumbotron-heading">Lights</h1>
-        </div>
-    </section>
 
-    <div class="album py-5 bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h3 class="card-text">{{ light.name }}</h3>
-                            <p class="card-text">{{ light.status }}</p>
-                            <p class="card-text">{{ light.colour }}</p>
-                            <p class="card-text">{{ light.brightness }}</p>
-                        </div>
-                    </div>
-                </div>
+<div class="container">
+    <div class="card-deck mb-3 text-center">
+
+
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h5 class="card-title">{{ light.name }}</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li>{{ light.status }}</li>
+                    <li>{{ light.colour }}</li>
+                    <li>{{ light.brightness }}</li>
+                </ul>
+                <form action="/lights/{{ light.id }}">
+                    <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Speichern
+                    </button>
+                </form>
             </div>
         </div>
+
     </div>
-</main>
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+
+    </footer>
+</div>
+
+
 <!-- /.container -->
 
 </body>
