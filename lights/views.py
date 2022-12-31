@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
-
-# Create your views here.
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+import json
+from django.http import JsonResponse
+#from mqtt.mqtt import client as mqtt_client
+from django.shortcuts import render
+from django.http import Http404, HttpResponseRedirect
 from lights.forms import LightForm
 from lights.models import Light
 
@@ -53,3 +54,9 @@ def add(request):
     else:
         form = LightForm()
     return render(request, 'lights/add.html', {'form': form})
+
+
+def publish_message(request):
+    request_data = json.loads(request.body)
+    rc, mid = mqtt_client.publish(request_data['topic'], request_data['msg'])
+    return JsonResponse({'code': rc})

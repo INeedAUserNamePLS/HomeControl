@@ -9,4 +9,6 @@ urlpatterns = [
     path('<int:light_id>/', views.detail, name='detail'),
     # ex: /lights/add/
     path('add/', views.add, name='add'),
+    # ex: /lights/publish
+    path('publish', views.publish_message, name='publish'),
 ]
