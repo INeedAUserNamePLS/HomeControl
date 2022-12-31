@@ -19,3 +19,7 @@ def detail(request, light_id):
     except Light.DoesNotExist:
         raise Http404("Question does not exist")
     return render(request, 'lights/detail.html', {'light': light})
+
+
+def add(request):
+    return render(request, 'lights/add.html')
