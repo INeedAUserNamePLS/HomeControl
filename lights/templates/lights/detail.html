@@ -25,19 +25,23 @@
             <h5 class="card-title">{{ light.name }}</h5>
         </div>
         <div class="card-body">
-            <form action="/lights/">
+            <form action="/lights/{{ light.id }}/" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
                 <div class="mb-4">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDisabled"
+                    <input class="form-check-input" type="checkbox" role="switch" id="status"
                             {% if light.status %} checked{% endif %}>
-                    <label class="form-check-label" for="flexSwitchCheckDisabled">Off/On</label>
+                    <label class="form-check-label" for="status">Off/On</label>
                 </div>
                 <div class="mb-4">
-                    <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput"
+                    <input type="color" class="form-control form-control-color mx-auto" id="colour"
                            value="{{ light.colour }}">
+                    <label class="form-check-label" for="colour">Colour</label>
                 </div>
                 <div class="mb-4">
-                    <input type="range" class="form-range" min="0" max="100" step="10" id="customRange3"
+                    <input type="range" class="form-range" min="0" max="100" step="10" id="brightness"
                            value="{{ light.brightness }}">
+                    <label class="form-check-label" for="brightness">Brightness</label>
                 </div>
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Save
                 </button>

@@ -27,17 +27,20 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-4">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDisabled"
+                            <input class="form-check-input" type="checkbox" role="switch" id="SwitchOnOff"
                                    disabled {% if light.status %} checked{% endif %}>
-                            <label class="form-check-label" for="flexSwitchCheckDisabled">Off/On</label>
+                            <label class="form-check-label" for="SwitchOnOff">{% if light.status %} On {% else %}
+                                Off {% endif %}</label>
                         </div>
                         <div class="mb-4">
-                            <input type="color" class="form-control form-control-color mx-auto" id="exampleColorInput"
+                            <input type="color" class="form-control form-control-color mx-auto" id="ColourInput"
                                    value="{{ light.colour }}" disabled>
+                            <label class="form-check-label" for="ColourInput">Colour</label>
                         </div>
                         <div class="mb-4">
-                            <input type="range" class="form-range" min="0" max="100" step="10" id="customRange3"
+                            <input type="range" class="form-range" min="0" max="100" step="10" id="RangeBrightness"
                                    value="{{ light.brightness }}" disabled>
+                            <label class="form-check-label" for="RangeBrightness">Brightness</label>
                         </div>
 
                         <a href="/lights/{{ light.id }}" class="btn btn-outline-primary btn-lg btn-block">Edit</a>
