@@ -7,7 +7,7 @@ class LightForm(ModelForm):
     class Meta:
         model = Light
         fields = [
-            'name', 'status', 'colour', 'brightness'
+            'status', 'colour', 'brightness'
         ]
 
 
