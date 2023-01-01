@@ -31,9 +31,7 @@
                     <div class="input-group mb-3">
                         <span for="{{ form.name.id_for_label }}" class="input-group-text"
                               id="lamp_name">Lamp name</span>
-                        <input type="text" class="form-control" placeholder="" id="lamp_name" name="lamp_name"
-                               aria-label="Lamp name"
-                               aria-describedby="lamp-name" value="{{ form.name.as_div }}">{{ form.name }}
+                        <div>{{ form.name | as_crispy_field }}</div>
                     </div>
 
                     <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Save

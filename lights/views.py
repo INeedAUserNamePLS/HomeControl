@@ -3,7 +3,7 @@ from django.http import JsonResponse
 import paho.mqtt.client as mqtt_client
 from django.shortcuts import render
 from django.http import Http404, HttpResponseRedirect
-from lights.forms import LightForm
+from lights.forms import LightForm, AddForm
 from lights.models import Light
 
 
@@ -12,14 +12,11 @@ def index(request):
     if request.method == 'POST':
         # adding lamp
         # create a form instance and populate it with data from the request:
-        form = LightForm(request.POST)
+        form = AddForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
             light = form.save(commit=False)
-            light.status = 0
-            light.colour = '#898989'
-            light.brightness = 100
             light.save()
 
     # if a GET (or any other method) we'll create a blank form
@@ -57,7 +54,7 @@ def detail(request, light_id):
 
 
 def add(request):
-    form = LightForm()
+    form = AddForm()
     return render(request, 'lights/add.html', {'form': form})
 
 

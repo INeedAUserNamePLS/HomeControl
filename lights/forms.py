@@ -9,3 +9,11 @@ class LightForm(ModelForm):
         fields = [
             'name', 'status', 'colour', 'brightness'
         ]
+
+
+class AddForm(ModelForm):
+    class Meta:
+        model = Light
+        fields = [
+            'name'
+        ]
