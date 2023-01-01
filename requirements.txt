@@ -1,0 +1,2 @@
+paho-mqtt==1.6.1
+Django==4.1.4
