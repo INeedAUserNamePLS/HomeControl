@@ -27,26 +27,29 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-4">
-                            <input class="form-check-input" type="checkbox" role="switch" id="SwitchOnOff"
+                            <input class="form-check-input" type="checkbox" role="switch" id="status"
                                    disabled {% if light.status %} checked{% endif %}>
-                            <label class="form-check-label" for="SwitchOnOff">{% if light.status %} On {% else %}
+                            <label class="form-check-label" for="status">{% if light.status %} On {% else %}
                                 Off {% endif %}</label>
                         </div>
                         <div class="mb-4">
-                            <input type="color" class="form-control form-control-color mx-auto" id="ColourInput"
+                            <input type="color" class="form-control form-control-color mx-auto" id="colour"
                                    value="{{ light.colour }}" disabled>
-                            <label class="form-check-label" for="ColourInput">Colour</label>
+                            <label class="form-check-label" for="colour">Colour</label>
                         </div>
                         <div class="mb-4">
-                            <input type="range" class="form-range" min="0" max="100" step="10" id="RangeBrightness"
+                            <input type="range" class="form-range" min="0" max="100" step="10" id="brightness"
                                    value="{{ light.brightness }}" disabled>
-                            <label class="form-check-label" for="RangeBrightness">Brightness</label>
+                            <label class="form-check-label" for="brightness">Brightness</label>
                         </div>
 
                         <a href="/lights/{{ light.id }}" class="btn btn-outline-primary btn-lg btn-block">Edit</a>
                     </div>
                     <div class="card-footer text-muted">
-                        <a href="/lights/{{ light.id }}/delete" class="nav-link">Delete</a>
+                        <form action="/lights/{{ light.id }}/delete/" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn mx-auto">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -25,13 +25,15 @@
                 <h5 class="card-title">Add new light</h5>
             </div>
             <div class="card-body">
-                <form action="/lights/{{ light.id }}">
+                {% load crispy_forms_tags %}
+                <form action="/lights/" method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">Lamp name</span>
-                        <input type="text" class="form-control" placeholder="" aria-label="Lamp name"
-                               aria-describedby="basic-addon1">
+                        <span for="{{ form.name.id_for_label }}" class="input-group-text"
+                              id="lamp_name">Lamp name</span>
+                        <input type="text" class="form-control" placeholder="" id="lamp_name" name="lamp_name"
+                               aria-label="Lamp name"
+                               aria-describedby="lamp-name" value="{{ form.name.as_div }}">{{ form.name }}
                     </div>
 
                     <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Save

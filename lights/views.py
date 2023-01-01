@@ -1,6 +1,6 @@
 import json
 from django.http import JsonResponse
-#from mqtt.mqtt import client as mqtt_client
+import paho.mqtt.client as mqtt_client
 from django.shortcuts import render
 from django.http import Http404, HttpResponseRedirect
 from lights.forms import LightForm
@@ -8,16 +8,35 @@ from lights.models import Light
 
 
 def index(request):
-    light_list = Light.objects.all()
-    context = {'latest_light_list': light_list}
-    return render(request, 'lights/index.html', context)
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # adding lamp
+        # create a form instance and populate it with data from the request:
+        form = LightForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            light = form.save(commit=False)
+            light.status = 0
+            light.colour = '#898989'
+            light.brightness = 100
+            light.save()
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        light_list = Light.objects.all()
+        context = {'latest_light_list': light_list}
+        return render(request, 'lights/index.html', context)
+    return HttpResponseRedirect('/lights/')
 
 
 def detail(request, light_id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
+        # editing existing lamp
         # create a form instance and populate it with data from the request:
-        form = LightForm(request.POST)
+        light_instance = Light.objects.get(pk=1)
+        form = LightForm(request.POST, instance=light_instance)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
@@ -38,22 +57,15 @@ def detail(request, light_id):
 
 
 def add(request):
+    form = LightForm()
+    return render(request, 'lights/add.html', {'form': form})
+
+
+def delete(request, light_id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = LightForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            light = form.save(commit=False)
-            light.save()
-            # redirect to a new URL:
-            return HttpResponseRedirect('/lights/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = LightForm()
-    return render(request, 'lights/add.html', {'form': form})
+        Light.objects.filter(pk=light_id).delete()
+    return HttpResponseRedirect('/lights/')
 
 
 def publish_message(request):

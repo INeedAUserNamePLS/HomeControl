@@ -27,21 +27,25 @@
         <div class="card-body">
             <form action="/lights/{{ light.id }}/" method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
                 <div class="mb-4">
-                    <input class="form-check-input" type="checkbox" role="switch" id="status"
+                    <input class="form-check-input" type="checkbox" role="switch" id="status_{{ forloop.counter }}"
                             {% if light.status %} checked{% endif %}>
-                    <label class="form-check-label" for="status">Off/On</label>
+                    <label class="form-check-label" for="status_{{ forloop.counter }}">Off/On</label>
+                    {{ form.status }}
                 </div>
                 <div class="mb-4">
-                    <input type="color" class="form-control form-control-color mx-auto" id="colour"
+                    <input type="color" class="form-control form-control-color mx-auto"
+                           id="colour_{{ forloop.counter }}"
                            value="{{ light.colour }}">
-                    <label class="form-check-label" for="colour">Colour</label>
+                    <label class="form-check-label" for="colour_{{ forloop.counter }}">Colour</label>
+                    {{ form.colour }}
                 </div>
                 <div class="mb-4">
-                    <input type="range" class="form-range" min="0" max="100" step="10" id="brightness"
+                    <input type="range" class="form-range" min="0" max="100" step="10"
+                           id="brightness_{{ forloop.counter }}"
                            value="{{ light.brightness }}">
-                    <label class="form-check-label" for="brightness">Brightness</label>
+                    <label class="form-check-label" for="brightness_{{ forloop.counter }}">Brightness</label>
+                    {{ form.brightness }}
                 </div>
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Save
                 </button>
