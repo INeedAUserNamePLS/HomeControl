@@ -28,20 +28,20 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-4">
-                            <input class="form-check-input" type="checkbox" role="switch" id="status"
+                            <input class="form-check-input" type="checkbox" role="switch" id="status_{{ forloop.counter }}"
                                    disabled {% if light.status %} checked{% endif %}>
-                            <label class="form-check-label" for="status">{% if light.status %} On {% else %}
+                            <label class="form-check-label" for="status_{{ forloop.counter }}">{% if light.status %} On {% else %}
                                 Off {% endif %}</label>
                         </div>
                         <div class="mb-4">
-                            <input type="color" class="form-control form-control-color mx-auto" id="colour"
+                            <input type="color" class="form-control form-control-color mx-auto" id="colour_{{ forloop.counter }}"
                                    value="{{ light.colour }}" disabled>
-                            <label class="form-check-label" for="colour">Colour</label>
+                            <label class="form-check-label" for="colour_{{ forloop.counter }}">Colour</label>
                         </div>
                         <div class="mb-4">
-                            <input type="range" class="form-range" min="0" max="100" step="10" id="brightness"
+                            <input type="range" class="form-range" min="0" max="100" step="10" id="brightness_{{ forloop.counter }}"
                                    value="{{ light.brightness }}" disabled>
-                            <label class="form-check-label" for="brightness">Brightness</label>
+                            <label class="form-check-label" for="brightness_{{ forloop.counter }}">Brightness</label>
                         </div>
 
                         <a href="/lights/{{ light.id }}" class="btn btn-outline-primary btn-lg btn-block">Edit</a>

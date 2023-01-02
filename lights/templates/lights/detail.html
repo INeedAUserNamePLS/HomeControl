@@ -7,6 +7,7 @@
     <title>Home Control</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="shortcut icon" href="./../../static/lights/images/light.ico">
 </head>
 <body>
 {% include "header.html" %}
@@ -15,7 +16,6 @@
 <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Lights</h1>
 </div>
-
 
 <div class="container">
 
@@ -28,24 +28,25 @@
             <form action="/lights/{{ light.id }}/" method="post">
                 {% csrf_token %}
                 <div class="mb-4">
-                    <input class="form-check-input" type="checkbox" role="switch" id="status_{{ forloop.counter }}"
+                    <input class="form-check-input" type="checkbox" name="status" role="switch" id="status"
                             {% if light.status %} checked{% endif %}>
-                    <label class="form-check-label" for="status_{{ forloop.counter }}">Off/On</label>
-                    {{ form.status }}
+                    <label class="form-check-label" for="status">Off/On</label>
                 </div>
                 <div class="mb-4">
                     <input type="color" class="form-control form-control-color mx-auto"
-                           id="colour_{{ forloop.counter }}"
-                           value="{{ light.colour }}">
-                    <label class="form-check-label" for="colour_{{ forloop.counter }}">Colour</label>
-                    {{ form.colour }}
+                           id="colour"
+                           value="{{ light.colour }}"
+                           name="colour">
+                    <label class="form-check-label" for="colour">Colour</label>
+
                 </div>
                 <div class="mb-4">
                     <input type="range" class="form-range" min="0" max="100" step="10"
-                           id="brightness_{{ forloop.counter }}"
-                           value="{{ light.brightness }}" onblur="Brifunction()">
-                    <label class="form-check-label" for="brightness_{{ forloop.counter }}">Brightness</label>
-                    {{ form.brightness }}
+                           id="brightness"
+                           value="{{ light.brightness }}"
+                           name="brightness">
+                    <label class="form-check-label" for="brightness">Brightness</label>
+
                 </div>
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Save
                 </button>
@@ -63,11 +64,11 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 <script>
-    function Brifunction() {
-        document.getElementById('brightness_{{ forloop.counter }}').addEventListener('change', function() {
-                    brightness = document.getElementById("brightness_{{ forloop.counter }}").value;
-                    document.getElementById(form.autoid.brightness).value =  brightness;
-            });
+    function Brightness_function() {
+        document.getElementById('brightness').addEventListener('change', function () {
+            let brightness = document.getElementById("brightness").value;
+            document.getElementById(form.brightness).value = brightness;
+        });
     }
 </script>
 </body>

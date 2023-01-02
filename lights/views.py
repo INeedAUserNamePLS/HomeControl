@@ -29,22 +29,24 @@ def index(request):
 
 def detail(request, light_id):
     # if this is a POST request we need to process the form data
+    light_instance = Light.objects.get(pk=light_id)
     if request.method == 'POST':
         # editing existing lamp
         # create a form instance and populate it with data from the request:
-        light_instance = Light.objects.get(pk=1)
         form = LightForm(request.POST, instance=light_instance)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
             light = form.save(commit=False)
+            light.name = light_instance.name
             light.save()
             # redirect to a new URL:
             return HttpResponseRedirect('/lights/')
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = LightForm()
+        form = LightForm(initial={'status': light_instance.status, 'colour': light_instance.colour,
+                                  'brightness': light_instance.brightness})
         try:
             light = Light.objects.get(pk=light_id)
         except Light.DoesNotExist:
