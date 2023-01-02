@@ -43,7 +43,7 @@
                 <div class="mb-4">
                     <input type="range" class="form-range" min="0" max="100" step="10"
                            id="brightness_{{ forloop.counter }}"
-                           value="{{ light.brightness }}">
+                           value="{{ light.brightness }}" onblur="Brifunction()">
                     <label class="form-check-label" for="brightness_{{ forloop.counter }}">Brightness</label>
                     {{ form.brightness }}
                 </div>
@@ -62,5 +62,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+<script>
+    function Brifunction() {
+        document.getElementById('brightness_{{ forloop.counter }}').addEventListener('change', function() {
+                    brightness = document.getElementById("brightness_{{ forloop.counter }}").value;
+                    document.getElementById(form.autoid.brightness).value =  brightness;
+            });
+    }
+</script>
 </body>
 </html>
