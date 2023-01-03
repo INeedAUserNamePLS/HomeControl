@@ -1,6 +1,7 @@
 import json
 from django.http import JsonResponse
 import paho.mqtt.client as mqtt_client
+from . import mqtt
 from django.shortcuts import render
 from django.http import Http404, HttpResponseRedirect
 from lights.forms import LightForm, AddForm
@@ -38,8 +39,11 @@ def detail(request, light_id):
         if form.is_valid():
             # process the data in form.cleaned_data as required
             light = form.save(commit=False)
-            light.name = light_instance.name
             light.save()
+            # send mqtt
+            data = {'name': light.name, 'status': light_instance.status, 'colour': light_instance.colour,
+                    'brightness': light_instance.brightness}
+            mqtt_client.Client.publish(mqtt.client, 'lights', json.dumps(data))
             # redirect to a new URL:
             return HttpResponseRedirect('/lights/')
 
@@ -65,9 +69,3 @@ def delete(request, light_id):
     if request.method == 'POST':
         Light.objects.filter(pk=light_id).delete()
     return HttpResponseRedirect('/lights/')
-
-
-def publish_message(request):
-    request_data = json.loads(request.body)
-    rc, mid = mqtt_client.publish(request_data['topic'], request_data['msg'])
-    return JsonResponse({'code': rc})
