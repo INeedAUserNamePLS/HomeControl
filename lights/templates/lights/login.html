@@ -1,0 +1,39 @@
+{% include "header.html" %}
+
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">HomeControl</h1>
+</div>
+
+
+<div class="container">
+    <div class="card-deck mb-3 text-center">
+
+
+        <div class="card mb-4 box-shadow" style="width: 40rem; margin-left: auto; margin-right: auto;">
+            <div class="card-header">
+                <h5 class="card-title">Login</h5>
+            </div>
+            <div class="card-body">
+                <form action="/lights/" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <span for="{{ form.name.id_for_label }}" class="input-group-text"
+                              id="username">Username</span>
+                        <input type="text" class="form-control" name="name" aria-label="Username" aria-describedby="username">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span for="{{ form.name.id_for_label }}" class="input-group-text"
+                              id="username">Password</span>
+                        <input type="text" class="form-control" name="name" aria-label="Username" aria-describedby="username">
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-block btn-outline-primary mb-3">Login
+                    </button>
+                </form>
+                <a href="/lights/register" class="btn btn-outline-primary btn-lg btn-block">Register</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% include "footer.html" %}

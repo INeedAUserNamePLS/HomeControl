@@ -9,26 +9,29 @@ from lights.models import Light
 
 
 def index(request):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # adding lamp
-        # create a form instance and populate it with data from the request:
-        form = AddForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            light = form.save(commit=False)
-            light.save()
+    if request.user.is_authenticated:
+        # if this is a POST request we need to process the form data
+        if request.method == 'POST':
+            # adding lamp
+            # create a form instance and populate it with data from the request:
+            form = AddForm(request.POST)
+            # check whether it's valid:
+            if form.is_valid():
+                # process the data in form.cleaned_data as required
+                light = form.save(commit=False)
+                light.save()
 
-    # if a GET (or any other method) we'll create a blank form
+        # if a GET (or any other method) we'll create a blank form
+        else:
+            light_list = Light.objects.all()
+            context = {'latest_light_list': light_list}
+            return render(request, 'lights/index.html', context)
+        return HttpResponseRedirect('/lights/')
     else:
-        light_list = Light.objects.all()
-        context = {'latest_light_list': light_list}
-        return render(request, 'lights/index.html', context)
-    return HttpResponseRedirect('/lights/')
+        return render(request, 'lights/login.html')
 
 
-def detail(request, light_id):
+def detailLight(request, light_id):
     # if this is a POST request we need to process the form data
     light_instance = Light.objects.get(pk=light_id)
     if request.method == 'POST':
@@ -59,13 +62,16 @@ def detail(request, light_id):
     return HttpResponseRedirect('/lights/')
 
 
-def add(request):
+def addLight(request):
     form = AddForm()
     return render(request, 'lights/add.html', {'form': form})
 
 
-def delete(request, light_id):
+def deleteLight(request, light_id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         Light.objects.filter(pk=light_id).delete()
     return HttpResponseRedirect('/lights/')
+
+def register(request):
+    return render(request, 'lights/register.html')

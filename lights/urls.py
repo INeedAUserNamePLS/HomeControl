@@ -6,9 +6,11 @@ urlpatterns = [
     # ex: /lights/
     path('', views.index, name='index'),
     # ex: /lights/5/
-    path('<int:light_id>/', views.detail, name='detail'),
+    path('<int:light_id>/', views.detailLight, name='detail'),
     # ex: /lights/add/
-    path('add/', views.add, name='add'),
+    path('add/', views.addLight, name='add'),
     # ex: /lights/5/delete/
-    path('<int:light_id>/delete/', views.delete, name='delete'),
+    path('<int:light_id>/delete/', views.deleteLight, name='delete'),
+     # ex: /lights/
+    path('register', views.register, name='register'),
 ]
