@@ -19,3 +19,8 @@ def loginUser(request):
 
 def registerUser(request):
     return render(request,'authenticate/register.html', {})
+
+def logoutUser(request):
+    logout(request)
+    messages.info(request,("User was logged out"))
+    return redirect('login')

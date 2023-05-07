@@ -2,30 +2,33 @@ import json
 from django.http import JsonResponse
 import paho.mqtt.client as mqtt_client
 from . import mqtt
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import Http404, HttpResponseRedirect
 from lights.forms import LightForm, AddForm
 from lights.models import Light
 
 
 def index(request):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # adding lamp
-        # create a form instance and populate it with data from the request:
-        form = AddForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            light = form.save(commit=False)
-            light.save()
-
-    # if a GET (or any other method) we'll create a blank form
+    if not request.user.is_authenticated:
+        return redirect("login")
     else:
-        light_list = Light.objects.all()
-        context = {'latest_light_list': light_list}
-        return render(request, 'lights/index.html', context)
-    return HttpResponseRedirect('/lights/')
+        # if this is a POST request we need to process the form data
+        if request.method == 'POST':
+            # adding lamp
+            # create a form instance and populate it with data from the request:
+            form = AddForm(request.POST)
+            # check whether it's valid:
+            if form.is_valid():
+                # process the data in form.cleaned_data as required
+                light = form.save(commit=False)
+                light.save()
+            return redirect("index")
+
+        # if a GET (or any other method) we'll create a blank form
+        else:
+            light_list = Light.objects.all()
+            context = {'latest_light_list': light_list}
+            return render(request, 'lights/index.html', context)
 
 
 
@@ -70,3 +73,6 @@ def deleteLight(request, light_id):
     if request.method == 'POST':
         Light.objects.filter(pk=light_id).delete()
     return HttpResponseRedirect('/lights/')
+
+def editBroker(request):
+    return render(request,'broker/detail.html', {})
