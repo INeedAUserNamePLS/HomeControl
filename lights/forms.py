@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from lights.models import Light,User
+from lights.models import Light
 
 
 class LightForm(ModelForm):

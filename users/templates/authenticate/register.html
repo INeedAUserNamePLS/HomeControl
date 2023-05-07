@@ -11,21 +11,14 @@
 
         <div class="card mb-4 box-shadow" style="width: 40rem; margin-left: auto; margin-right: auto;">
             <div class="card-header">
-                <h5 class="card-title">Login</h5>
+                <h5 class="card-title">Register</h5>
             </div>
             <div class="card-body">
-                <form action="{% url 'index'%}" method="post">
+                <form action="{% url 'register'%}" method="post">
                     {% csrf_token %}
-                    <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text"
-                              id="username">Username</span>
-                        <input type="text" class="form-control" name="name" aria-label="Username" aria-describedby="username">
-                    </div>
-                    <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text"
-                              id="username">Password</span>
-                        <input type="password" class="form-control" name="name" aria-label="Username" aria-describedby="username">
-                    </div>
+                    {{ form.as_p }}
+                    <br>
+                    <br>
                     <button type="submit" class="btn btn-lg btn-block btn-outline-primary mb-3">Register
                     </button>
                 </form>
@@ -34,5 +27,14 @@
 
     </div>
 </div>
+
+{% if form.errors %}
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    There was an error with your form
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endif %}
 
 {% include "footer.html" %}
