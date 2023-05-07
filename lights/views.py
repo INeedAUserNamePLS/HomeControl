@@ -9,26 +9,24 @@ from lights.models import Light
 
 
 def index(request):
-    if request.user.is_authenticated:
-        # if this is a POST request we need to process the form data
-        if request.method == 'POST':
-            # adding lamp
-            # create a form instance and populate it with data from the request:
-            form = AddForm(request.POST)
-            # check whether it's valid:
-            if form.is_valid():
-                # process the data in form.cleaned_data as required
-                light = form.save(commit=False)
-                light.save()
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # adding lamp
+        # create a form instance and populate it with data from the request:
+        form = AddForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            light = form.save(commit=False)
+            light.save()
 
-        # if a GET (or any other method) we'll create a blank form
-        else:
-            light_list = Light.objects.all()
-            context = {'latest_light_list': light_list}
-            return render(request, 'lights/index.html', context)
-        return HttpResponseRedirect('/lights/')
+    # if a GET (or any other method) we'll create a blank form
     else:
-        return render(request, 'lights/login.html')
+        light_list = Light.objects.all()
+        context = {'latest_light_list': light_list}
+        return render(request, 'lights/index.html', context)
+    return HttpResponseRedirect('/lights/')
+
 
 
 def detailLight(request, light_id):
@@ -72,6 +70,3 @@ def deleteLight(request, light_id):
     if request.method == 'POST':
         Light.objects.filter(pk=light_id).delete()
     return HttpResponseRedirect('/lights/')
-
-def register(request):
-    return render(request, 'lights/register.html')

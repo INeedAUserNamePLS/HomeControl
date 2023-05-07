@@ -11,6 +11,4 @@ urlpatterns = [
     path('add/', views.addLight, name='add'),
     # ex: /lights/5/delete/
     path('<int:light_id>/delete/', views.deleteLight, name='delete'),
-     # ex: /lights/
-    path('register', views.register, name='register'),
 ]

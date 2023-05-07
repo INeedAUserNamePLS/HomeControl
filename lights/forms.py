@@ -16,10 +16,3 @@ class AddForm(ModelForm):
         fields = [
             'name'
         ]
-
-class LoginForm(ModelForm):
-    class Meta:
-        model = User
-        fields = [
-            'name'
-        ]
