@@ -48,3 +48,7 @@ def logoutUser(request):
     logout(request)
     messages.info(request, ("User was logged out"))
     return redirect("login")
+
+@login_required
+def manageAccount(request):
+    return render(request,'account/view.html', {'account': request.user})
