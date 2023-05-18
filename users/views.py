@@ -30,18 +30,24 @@ def registerUser(request):
             password = form.cleaned_data["password1"]
             user = authenticate(username=username, password=password)
             login(request, user)
+            return redirect("twoFactor")
+    else:
+        form = RegisterUserForm()
+        return render(request, "authenticate/register.html", {"form": form})
+
+@login_required
+def twoFactor(request):
+    if request.method == "POST":
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data["username"]
             messages.success(request, ("Registration Successful"))
             return redirect("index")
     else:
-        form = RegisterUserForm()
+        return render(request, "authenticate/twoFactor.html", {})
 
-    return render(
-        request,
-        "authenticate/register.html",
-        {
-            "form": form,
-        },
-    )
+
 
 @login_required
 def logoutUser(request):
@@ -49,6 +55,7 @@ def logoutUser(request):
     messages.info(request, ("User was logged out"))
     return redirect("login")
 
+
 @login_required
 def manageAccount(request):
-    return render(request,'account/view.html', {'account': request.user})
+    return render(request, "account/view.html", {"account": request.user})

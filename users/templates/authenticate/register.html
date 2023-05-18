@@ -16,9 +16,21 @@
             <div class="card-body">
                 <form action="{% url 'register'%}" method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <br>
-                    <br>
+                    <div class="input-group mb-3">
+                        <span for="{{ form.name.id_for_label }}" class="input-group-text"
+                              id="username">Username</span>
+                        <input type="text" class="form-control" name="username" aria-label="Username" aria-describedby="username">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span for="{{ form.name.id_for_label }}" class="input-group-text"
+                              id="password1">Password</span>
+                        <input type="password" class="form-control" name="password" aria-label="Password" aria-describedby="password">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span for="{{ form.name.id_for_label }}" class="input-group-text"
+                              id="password2">Repeat Password</span>
+                        <input type="password" class="form-control" name="password" aria-label="Password" aria-describedby="password">
+                    </div>
                     <button type="submit" class="btn btn-lg btn-block btn-outline-primary mb-3">Register
                     </button>
                 </form>

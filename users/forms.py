@@ -5,9 +5,9 @@ from django import forms
 
 
 class RegisterUserForm(UserCreationForm):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}))
-    firstName = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))
-    lastName = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))
+    email = forms.EmailField()
+    firstName = forms.CharField(max_length=50)
+    lastName = forms.CharField(max_length=50)
 
     class Meta:
         model = User
@@ -19,10 +19,3 @@ class RegisterUserForm(UserCreationForm):
             "password1",
             "password2",
         ]
-    
-    def __init__(self, *args, **kwargs):
-        super(RegisterUserForm, self).__init__(*args, **kwargs)
-
-        self.fields['username'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
