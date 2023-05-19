@@ -13,7 +13,7 @@
             <h5 class="card-title">{{ light.name }}</h5>
         </div>
         <div class="card-body">
-            <form action="/lights/{{ light.id }}/" method="post">
+            <form action="{% url 'detailLight' light.id %}" method="post">
                 {% csrf_token %}
                 <div class="mb-4">
                     <input class="form-check-input" type="checkbox" name="status" role="switch" id="status"

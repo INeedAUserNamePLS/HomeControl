@@ -32,12 +32,12 @@
                             <label class="form-check-label" for="brightness_{{ forloop.counter }}">Brightness</label>
                         </div>
 
-                        <a href="/lights/{{ light.id }}" class="btn btn-outline-primary btn-lg btn-block">Edit</a>
+                        <a href="{% url 'detailLight' light.id %}" class="btn btn-outline-primary btn-lg btn-block">Edit</a>
                     </div>
                     <div class="card-footer text-muted">
-                        <form action="/lights/{{ light.id }}/delete/" method="post">
+                        <form action="{% url 'deleteLight' light.id %}" method="post">
                             {% csrf_token %}
-                            <button type="submit" class="btn mx-auto">Delete</button>
+                            <button type="submit" class="btn mx-auto btn-outline-danger">Delete</button>
                         </form>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
 
         <div class="col">
             <div class="card mb-4">
-                <a href="/lights/add/" class="my-auto stretched-link nav-link text-dark"><h3>+</h3></a>
+                <a href="{% url 'addLight' %}" class="my-auto stretched-link nav-link text-dark"><h3>+</h3></a>
             </div>
         </div>
 
