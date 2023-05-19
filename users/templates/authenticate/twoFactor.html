@@ -1,0 +1,36 @@
+{% include "header.html" %}
+
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">HomeControl</h1>
+</div>
+
+
+<div class="container">
+    <div class="card-deck mb-3 text-center">
+
+
+        <div class="card mb-4 box-shadow" style="width: 40rem; margin-left: auto; margin-right: auto;">
+            <div class="card-header">
+                <h5 class="card-title">Register</h5>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'register'%}" method="post">
+                    {% csrf_token %}
+                    
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% if form.errors %}
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    There was an error with your form
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endif %}
+
+{% include "footer.html" %}

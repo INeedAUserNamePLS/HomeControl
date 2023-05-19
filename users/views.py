@@ -30,10 +30,10 @@ def registerUser(request):
             password = form.cleaned_data["password1"]
             user = authenticate(username=username, password=password)
             login(request, user)
+            messages.success(request, ("Registration Successful"))
             return redirect("twoFactor")
-    else:
-        form = RegisterUserForm()
-        return render(request, "authenticate/register.html", {"form": form})
+    form = RegisterUserForm()
+    return render(request, "authenticate/register.html", {"form": form})
 
 @login_required
 def twoFactor(request):
