@@ -8,6 +8,7 @@ class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     two_factor_code = models.CharField(max_length=20)
+    active = models.BooleanField()
     email = models.EmailField()
 
     def __str__(self):
@@ -18,5 +19,6 @@ def createAccount(sender, instance, created, **kwargs):
     if created:
         userProfile = Account(user=instance)
         userProfile.two_factor_code = "123"
+        userProfile.active = False;
         userProfile.save()
 

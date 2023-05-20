@@ -4,7 +4,7 @@ import paho.mqtt.client as mqtt_client
 from . import mqtt
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404
 from lights.forms import LightForm, AddForm, BrokerForm
 from lights.models import Light, Broker
 from django.contrib.auth.decorators import login_required

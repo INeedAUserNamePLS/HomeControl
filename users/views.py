@@ -44,9 +44,14 @@ def twoFactor(request):
         form = RegisterUserForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data["username"]
-            messages.success(request, ("Registration Successful"))
-            return redirect("index")
+            code = form.cleaned_data["code"]
+            if code == request.user.two_factor_code:
+                request.user.active = True
+                messages.success(request, ("Registration Successful"))
+                return redirect("index")
+            else:
+                messages.error(request, ("Wrong Code"))
+                return redirect("twoFactor")
         else:
            messages.error(request, form.errors) 
     else:
