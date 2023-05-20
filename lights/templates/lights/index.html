@@ -37,7 +37,7 @@
                     <div class="card-footer text-muted">
                         <form action="{% url 'deleteLight' light.id %}" method="post">
                             {% csrf_token %}
-                            <button type="submit" class="btn mx-auto btn-outline-danger">Delete</button>
+                            <button type="submit" class="btn mx-auto link-danger btn-link">Delete</button>
                         </form>
                     </div>
                 </div>
