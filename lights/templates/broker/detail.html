@@ -18,27 +18,27 @@
                 <div class="input-group mb-3">
                     <span for="{{ form.name.id_for_label }}" class="input-group-text" id="server">IP</span>
                     <input type="text" class="form-control" name="server" aria-label="Server"
-                        value="{{ broker.server }}" aria-describedby="server">
+                        value="{{ broker.server|default_if_none:'' }}" aria-describedby="server">
                 </div>
                 <div class="input-group mb-3">
                     <span for="{{ form.name.id_for_label }}" class="input-group-text" id="port">Port</span>
-                    <input type="text" class="form-control" name="port" aria-label="Port" value="{{ broker.port }}"
+                    <input type="text" class="form-control" name="port" aria-label="Port" value="{{ broker.port|default_if_none:'' }}"
                         aria-describedby="port">
                 </div>
                 <div class="input-group mb-3">
                     <span for="{{ form.name.id_for_label }}" class="input-group-text" id="keepAlive">Keep Alive</span>
                     <input type="text" class="form-control" name="keepAlive" aria-label="KeepAlive"
-                        value="{{ broker.keepAlive }}" aria-describedby="keepAlive">
+                        value="{{ broker.keepAlive|default_if_none:'' }}" aria-describedby="keepAlive">
                 </div>
                 <div class="input-group mb-3">
                     <span for="{{ form.name.id_for_label }}" class="input-group-text" id="user">User</span>
-                    <input type="text" class="form-control" name="user" aria-label="User" value="{{ broker.user }}"
+                    <input type="text" class="form-control" name="user" aria-label="User" value="{{ broker.user|default_if_none:'' }}"
                         aria-describedby="user">
                 </div>
                 <div class="input-group mb-3">
                     <span for="{{ form.name.id_for_label }}" class="input-group-text" id="password">Password</span>
                     <input type="password" class="form-control" name="password" aria-label="Password"
-                        value="{{ broker.password }}" aria-describedby="password">
+                        value="{{ broker.password|default_if_none:'' }}" aria-describedby="password">
                 </div>
                 <a href="{% url 'index'%}" class="btn btn-lg btn-block btn-outline-secondary mb-3" role="button">Back</a>
                 <button type="submit" class="btn btn-lg btn-block btn-outline-primary mb-3">Save
