@@ -33,7 +33,7 @@ def registerUser(request):
             messages.success(request, ("Registration Successful"))
             return redirect("twoFactor")
         else:
-            messages.error(request, ("Registration failed"))
+            messages.error(request, form.errors)
     form = RegisterUserForm()
     return render(request, "authenticate/register.html", {"form": form})
 
@@ -47,6 +47,8 @@ def twoFactor(request):
             username = form.cleaned_data["username"]
             messages.success(request, ("Registration Successful"))
             return redirect("index")
+        else:
+           messages.error(request, form.errors) 
     else:
         return render(request, "authenticate/twoFactor.html", {})
 
@@ -77,7 +79,7 @@ def changePassword(request):
                 messages.success(request, ("Password changed"))
                 return redirect("manageAccount")
             else:
-                messages.error(request, ("The two passwords did not match"))
+                messages.error(request, form.errors)
         else:
             messages.error(request, ("Password did not match the required Strength"))
         return redirect("changePassword")
