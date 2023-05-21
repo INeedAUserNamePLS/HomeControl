@@ -54,9 +54,9 @@ def twoFactor(request):
                 messages.error(request, ("Wrong Code"))
                 return redirect("twoFactor")
         else:
-           messages.error(request, form.errors) 
+            messages.error(request, form.errors)
     else:
-        mails.send()
+        mails.sendTwoFactor(request.user.email, request.user.two_factor_code)
         return render(request, "authenticate/twoFactor.html", {})
 
 
