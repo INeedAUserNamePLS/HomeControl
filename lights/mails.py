@@ -56,7 +56,3 @@ def sendTwoFactor(receiverMail, code):
     except HTTPError as error:
         print(f"An error occurred: {error}")
         message = None
-
-
-if __name__ == "__main__":
-    sendTwoFactor("martin.kribs.mk@gmail.com", "123")
