@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from users.forms import RegisterUserForm, ChangePasswordForm
+from lights import mails
 
 
 # Create your views here.
@@ -55,6 +56,7 @@ def twoFactor(request):
         else:
            messages.error(request, form.errors) 
     else:
+        mails.send()
         return render(request, "authenticate/twoFactor.html", {})
 
 
