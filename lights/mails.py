@@ -16,7 +16,7 @@ from jinja2 import Template
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
 
-def sendTwoFactor(receiverMail, code):
+def sendTwoFactor(receiverMail, code, host):
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -39,7 +39,7 @@ def sendTwoFactor(receiverMail, code):
     #
     with open(os.getcwd()+ "/lights/templates/mail.html", "r") as f:
         template = Template(f.read())
-    html = template.render(code=code)
+    html = template.render(code=code, host=host)
     html_message = MIMEText(html, "html")
     html_message["to"] = receiverMail
     html_message["subject"] = "Activation HomeControl-Account"

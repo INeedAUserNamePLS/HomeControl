@@ -3,6 +3,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.contrib.auth.models import User
 
+from users.models import Account
+
 
 class RegisterUserForm(UserCreationForm):
     email = forms.EmailField()
@@ -22,4 +24,11 @@ class ChangePasswordForm(SetPasswordForm):
         fields = [
             "password1",
             "password2",
+        ]
+
+class TwoFactorForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = [
+            "two_factor_code",
         ]

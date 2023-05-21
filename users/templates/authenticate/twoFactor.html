@@ -14,12 +14,12 @@
                 <h5 class="card-title">Two Factor</h5>
             </div>
             <div class="card-body">
-                <form action="{% url 'register'%}" method="post">
+                <form action="{% url 'twoFactor'%}" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
                         <span for="{{ form.name.id_for_label }}" class="input-group-text"
-                              id="code">Code</span>
-                        <input type="text" class="form-control" name="code" aria-label="Code" aria-describedby="code">
+                              id="twoFactor">Code</span>
+                        <input type="text" class="form-control" name="twoFactor" aria-label="TwoFactor" aria-describedby="twoFactor">
                     </div>
                     <button type="submit" class="btn btn-lg btn-block btn-outline-primary mb-3">Submit
                     </button>

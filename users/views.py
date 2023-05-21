@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from users.forms import RegisterUserForm, ChangePasswordForm
+from .models import Account
+from users.forms import RegisterUserForm, ChangePasswordForm, TwoFactorForm
 from lights import mails
 
 
@@ -28,10 +29,10 @@ def registerUser(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data["username"]
+            email = form.cleaned_data["email"]
             password = form.cleaned_data["password1"]
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=username, email=email, password=password)
             login(request, user)
-            messages.success(request, ("Registration Successful"))
             return redirect("twoFactor")
         else:
             messages.error(request, form.errors)
@@ -41,13 +42,15 @@ def registerUser(request):
 
 @login_required
 def twoFactor(request):
+    account = Account.objects.get(user=request.user)
+    accountCode = account.two_factor_code
     if request.method == "POST":
-        form = RegisterUserForm(request.POST)
+        form = TwoFactorForm(request.POST)
         if form.is_valid():
             form.save()
-            code = form.cleaned_data["code"]
-            if code == request.user.two_factor_code:
-                request.user.active = True
+            code = form.cleaned_data["twoFactor"]
+            if code == accountCode:
+                account.active = True
                 messages.success(request, ("Registration Successful"))
                 return redirect("index")
             else:
@@ -56,7 +59,7 @@ def twoFactor(request):
         else:
             messages.error(request, form.errors)
     else:
-        mails.sendTwoFactor(request.user.email, request.user.two_factor_code)
+        mails.sendTwoFactor(request.user.email, accountCode, request.get_host())
         return render(request, "authenticate/twoFactor.html", {})
 
 
@@ -93,3 +96,14 @@ def changePassword(request):
     else:
         form = ChangePasswordForm(request.user)
         return render(request, "account/changePassword.html", {"form": form})
+
+
+@login_required
+def activation(request, code):
+    if code == request.user.two_factor_code:
+        request.user.active = True
+        messages.success(request, ("Registration Successful"))
+        return redirect("index")
+    else:
+        messages.error(request, ("Wrong Code"))
+        return redirect("twoFactor")
