@@ -1,0 +1,7 @@
+{
+    "server": "broker.emqx.io",
+    "port": 1883,
+    "keepAlive": 60,
+    "user": "",
+    "password": ""
+}

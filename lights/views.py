@@ -1,5 +1,6 @@
 import json
 import paho.mqtt.client as mqtt_client
+from . import utils
 from users.models import Account
 from . import mqtt
 from django.contrib import messages
@@ -112,6 +113,13 @@ def editBroker(request):
             # process the data in form.cleaned_data as required
             broker = form.save(commit=False)
             broker.save()
+            data = {}
+            data["server"] = form.cleaned_data["server"]
+            data["port"] = form.cleaned_data["port"]
+            data["keepAlive"] = form.cleaned_data["keepAlive"]
+            data["user"] = form.cleaned_data["user"]
+            data["password"] = form.cleaned_data["password"]
+            utils.write_json("broker.json", data)
             messages.success(request, ("Broker saved successfully"))
 
     form = BrokerForm(
