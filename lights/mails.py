@@ -41,7 +41,7 @@ def getService():
 def sendTwoFactor(receiverMail, code, host):
     service = getService()
     #
-    with open(os.getcwd() + "/lights/templates/twoFactor.html", "r") as f:
+    with open(os.getcwd() + "/lights/templates/mails/twoFactor.html", "r") as f:
         template = Template(f.read())
     html = template.render(code=code, host=host)
     html_message = MIMEText(html, "html")
@@ -59,15 +59,15 @@ def sendTwoFactor(receiverMail, code, host):
         message = None
 
 
-def sendReset(receiverMail, code, host):
+def sendReset(receiverMail, userid, code, host):
     service = getService()
     #
-    with open(os.getcwd() + "/lights/templates/resetPassword.html", "r") as f:
+    with open(os.getcwd() + "/lights/templates/mails/resetPassword.html", "r") as f:
         template = Template(f.read())
-    html = template.render(code=code, host=host)
+    html = template.render(userid=userid, code=code, host=host)
     html_message = MIMEText(html, "html")
     html_message["to"] = receiverMail
-    html_message["subject"] = "Activation HomeControl-Account"
+    html_message["subject"] = "Password Recovery HomeControl-Account"
 
     create_message = {"raw": base64.urlsafe_b64encode(html_message.as_bytes()).decode()}
     try:

@@ -46,7 +46,7 @@ def registerUser(request):
     return render(request, "authenticate/register.html", {"form": form})
 
 
-def resetPassword(request):
+def resetMail(request):
     resetCode = secrets.token_urlsafe()
     if request.method == "POST":
         post_email = request.POST["email"]
@@ -54,11 +54,11 @@ def resetPassword(request):
             account = Account.objects.get(email=post_email)
             account.secretToken = resetCode
             account.save()
-            mails.sendReset(post_email, resetCode, request.get_host())
+            mails.sendReset(post_email, account.id, resetCode, request.get_host())
         messages.success(request, ("Password recovery mail sent, if Account exists"))
-        return render(request, "account/resetPassword.html", {})    
+        return render(request, "account/resetMail.html", {})
     else:
-        return render(request, "account/resetPassword.html", {})
+        return render(request, "account/resetMail.html", {})
 
 
 @login_required
@@ -116,7 +116,8 @@ def changePassword(request):
             else:
                 messages.error(request, form.errors)
         else:
-            messages.error(request, ("Password did not match the required Strength"))
+            # ToDo
+            messages.error(request, form.errors)
         return redirect("changePassword")
     else:
         form = ChangePasswordForm(request.user)
@@ -145,3 +146,36 @@ def deleteAccount(request):
         messages.error(request, e)
         return render(request, "account/view.html", {"account": request.user})
     return redirect("login")
+
+
+def passwordRecovery(request, userid, token):
+    account = Account.objects.get(id=userid)
+    if request.method == "POST":
+        form = ChangePasswordForm(request.user)
+        if form.is_valid():
+            form.save()
+            password1 = form.cleaned_data["password1"]
+            password2 = form.cleaned_data["password2"]
+            if password1 == password2:
+                if password1 == None:
+                    messages.error(request, ("Password is empty"))
+                else:
+                    account.set_password(password2)
+                    account.save()
+                    messages.success(request, ("Password changed"))
+                    return redirect("login")
+            else:
+                messages.error(request, ("Passwords did not match"))
+        else:
+            # ToDo
+            messages.error(request, form.errors)
+    else:
+        if account.secretToken != token:
+            messages.error(request, ("Wrong token"))
+            redirect("resetMail")    
+    form = ChangePasswordForm(request.user)
+    return render(
+        request,
+        "account/resetPassword.html",
+        {"form": form, "userid": userid, "token": token},
+    )
