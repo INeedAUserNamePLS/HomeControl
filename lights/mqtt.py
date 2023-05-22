@@ -18,7 +18,12 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 broker = utils.read_json("broker.json")
-client.username_pw_set(broker["user"], broker["password"])
+user = broker["user"]
+password = broker["password"]
+server = broker["server"]
+port = broker["port"]
+keepAlive = broker["keepAlive"] or 0
+client.username_pw_set(user, password)
 client.connect(
-    host=broker["server"], port=int(broker["port"]), keepalive=int(broker["keepAlive"])
+    host=server, port=port, keepalive=keepAlive
 )

@@ -113,13 +113,7 @@ def editBroker(request):
             # process the data in form.cleaned_data as required
             broker = form.save(commit=False)
             broker.save()
-            data = {}
-            data["server"] = form.cleaned_data["server"]
-            data["port"] = form.cleaned_data["port"]
-            data["keepAlive"] = form.cleaned_data["keepAlive"]
-            data["user"] = form.cleaned_data["user"]
-            data["password"] = form.cleaned_data["password"]
-            utils.write_json("broker.json", data)
+            saveBroker(form)
             messages.success(request, ("Broker saved successfully"))
 
     form = BrokerForm(
@@ -134,3 +128,15 @@ def editBroker(request):
     return render(
         request, "broker/detail.html", {"form": form, "broker": broker_instance}
     )
+
+def testBroker():
+    return True
+
+def saveBroker(form):
+    data = {}
+    data["server"] = form.cleaned_data["server"]
+    data["port"] = form.cleaned_data["port"]
+    data["keepAlive"] = form.cleaned_data["keepAlive"]
+    data["user"] = form.cleaned_data["user"]
+    data["password"] = form.cleaned_data["password"]
+    utils.write_json("broker.json", data)
