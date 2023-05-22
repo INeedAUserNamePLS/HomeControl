@@ -16,7 +16,7 @@ from jinja2 import Template
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
 
-def sendTwoFactor(receiverMail, code, host):
+def getService():
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -35,9 +35,13 @@ def sendTwoFactor(receiverMail, code, host):
             token.write(creds.to_json())
 
     # Call the Gmail API
-    service = build("gmail", "v1", credentials=creds)
+    return build("gmail", "v1", credentials=creds)
+
+
+def sendTwoFactor(receiverMail, code, host):
+    service = getService()
     #
-    with open(os.getcwd()+ "/lights/templates/mail.html", "r") as f:
+    with open(os.getcwd() + "/lights/templates/twoFactor.html", "r") as f:
         template = Template(f.read())
     html = template.render(code=code, host=host)
     html_message = MIMEText(html, "html")
@@ -47,10 +51,28 @@ def sendTwoFactor(receiverMail, code, host):
     create_message = {"raw": base64.urlsafe_b64encode(html_message.as_bytes()).decode()}
     try:
         message = (
-            service.users()
-            .messages()
-            .send(userId="me", body=create_message)
-            .execute()
+            service.users().messages().send(userId="me", body=create_message).execute()
+        )
+        print(f'sent message to {message} Message Id: {message["id"]}')
+    except HTTPError as error:
+        print(f"An error occurred: {error}")
+        message = None
+
+
+def sendReset(receiverMail, code, host):
+    service = getService()
+    #
+    with open(os.getcwd() + "/lights/templates/resetPassword.html", "r") as f:
+        template = Template(f.read())
+    html = template.render(code=code, host=host)
+    html_message = MIMEText(html, "html")
+    html_message["to"] = receiverMail
+    html_message["subject"] = "Activation HomeControl-Account"
+
+    create_message = {"raw": base64.urlsafe_b64encode(html_message.as_bytes()).decode()}
+    try:
+        message = (
+            service.users().messages().send(userId="me", body=create_message).execute()
         )
         print(f'sent message to {message} Message Id: {message["id"]}')
     except HTTPError as error:

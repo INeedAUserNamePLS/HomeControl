@@ -8,7 +8,7 @@
 <div class="container">
 
 
-    <div class="card mb-4 box-shadow text-center">
+    <div class="card mb-4 box-shadow text-center" style="width: 40rem; margin-left: auto; margin-right: auto;">
         <div class="card-header">
             <h5 class="card-title">Settings</h5>
         </div>
@@ -16,27 +16,27 @@
             <form action="{% url 'editBroker'%}" method="post">
                 {% csrf_token %}
                 <div class="input-group mb-3">
-                    <span for="{{ form.name.id_for_label }}" class="input-group-text" id="server">IP</span>
+                    <span for="{{ form.name.id_for_label }}" class="input-group-text w-25" id="server">IP</span>
                     <input type="text" class="form-control" name="server" aria-label="Server"
                         value="{{ broker.server|default_if_none:'' }}" aria-describedby="server">
                 </div>
                 <div class="input-group mb-3">
-                    <span for="{{ form.name.id_for_label }}" class="input-group-text" id="port">Port</span>
+                    <span for="{{ form.name.id_for_label }}" class="input-group-text w-25" id="port">Port</span>
                     <input type="text" class="form-control" name="port" aria-label="Port" value="{{ broker.port|default_if_none:'' }}"
                         aria-describedby="port">
                 </div>
                 <div class="input-group mb-3">
-                    <span for="{{ form.name.id_for_label }}" class="input-group-text" id="keepAlive">Keep Alive</span>
+                    <span for="{{ form.name.id_for_label }}" class="input-group-text w-25" id="keepAlive">Keep Alive</span>
                     <input type="text" class="form-control" name="keepAlive" aria-label="KeepAlive"
                         value="{{ broker.keepAlive|default_if_none:'' }}" aria-describedby="keepAlive">
                 </div>
                 <div class="input-group mb-3">
-                    <span for="{{ form.name.id_for_label }}" class="input-group-text" id="user">User</span>
+                    <span for="{{ form.name.id_for_label }}" class="input-group-text w-25" id="user">User</span>
                     <input type="text" class="form-control" name="user" aria-label="User" value="{{ broker.user|default_if_none:'' }}"
                         aria-describedby="user">
                 </div>
                 <div class="input-group mb-3">
-                    <span for="{{ form.name.id_for_label }}" class="input-group-text" id="password">Password</span>
+                    <span for="{{ form.name.id_for_label }}" class="input-group-text w-25" id="password">Password</span>
                     <input type="password" class="form-control" name="password" aria-label="Password"
                         value="{{ broker.password|default_if_none:'' }}" aria-describedby="password">
                 </div>

@@ -1,16 +1,22 @@
 import json
-from django.http import JsonResponse
 import paho.mqtt.client as mqtt_client
+from users.models import Account
 from . import mqtt
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.http import Http404
 from lights.forms import LightForm, AddForm, BrokerForm
 from lights.models import Light, Broker
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+
+def active_check(user):
+    account = Account.objects.get(user=user)
+    return account.active
 
 
 @login_required
+@user_passes_test(active_check)
 def index(request):
     # if this is a POST request we need to process the form data
     if request.method == "POST":
@@ -32,6 +38,7 @@ def index(request):
 
 
 @login_required
+@user_passes_test(active_check)
 def detailLight(request, light_id):
     # if this is a POST request we need to process the form data
     light_instance = Light.objects.get(pk=light_id)
@@ -73,12 +80,14 @@ def detailLight(request, light_id):
 
 
 @login_required
+@user_passes_test(active_check)
 def addLight(request):
     form = AddForm()
     return render(request, "lights/add.html", {"form": form})
 
 
 @login_required
+@user_passes_test(active_check)
 def deleteLight(request, light_id):
     # if this is a POST request we need to process the form data
     if request.method == "POST":
@@ -87,6 +96,7 @@ def deleteLight(request, light_id):
 
 
 @login_required
+@user_passes_test(active_check)
 def editBroker(request):
     # if this is a POST request we need to process the form data
     try:
@@ -113,4 +123,6 @@ def editBroker(request):
             "password": broker_instance.password,
         }
     )
-    return render(request, "broker/detail.html", {"form": form, "broker": broker_instance})
+    return render(
+        request, "broker/detail.html", {"form": form, "broker": broker_instance}
+    )

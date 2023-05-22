@@ -1,4 +1,6 @@
 from __future__ import print_function
+import base64
+from email.mime.text import MIMEText
 
 import os.path
 
@@ -9,7 +11,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+SCOPES = ['https://www.googleapis.com/auth/gmail.send']
 
 
 def main():
@@ -37,15 +39,9 @@ def main():
     try:
         # Call the Gmail API
         service = build('gmail', 'v1', credentials=creds)
-        results = service.users().labels().list(userId='me').execute()
-        labels = results.get('labels', [])
-
-        if not labels:
-            print('No labels found.')
-            return
-        print('Labels:')
-        for label in labels:
-            print(label['name'])
+        message = MIMEText('')
+        create_message = {'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()}
+        service.users().messages().send(userId="me", body=create_message).execute()
 
     except HttpError as error:
         # TODO(developer) - Handle errors from gmail API.

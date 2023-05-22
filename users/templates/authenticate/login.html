@@ -17,19 +17,22 @@
                 <form action="{% url 'login'%}" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text"
+                        <span for="{{ form.name.id_for_label }}" class="input-group-text w-25"
                               id="username">Username</span>
                         <input type="text" class="form-control" name="username" aria-label="Username" aria-describedby="username">
                     </div>
                     <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text"
+                        <span for="{{ form.name.id_for_label }}" class="input-group-text w-25"
                               id="username">Password</span>
                         <input type="password" class="form-control" name="password" aria-label="Password" aria-describedby="password">
                     </div>
-                    <button type="submit" class="btn btn-lg btn-block btn-outline-primary mb-3">Login
+                    <a href="{% url 'register'%}" class="btn btn-outline-secondary btn-lg btn-block mb-3">Register</a>
+                    <button type="submit" class="btn btn-lg btn-block btn-primary mb-3">Login
                     </button>
                 </form>
-                <a href="{% url 'register'%}" class="btn btn-outline-secondary btn-lg btn-block">Register</a>
+                <form action="{% url 'resetPassword' %}" method="get">
+                    <button type="submit" class="btn mx-auto link-primary btn-link">Forgot Password?</button>
+                </form>
             </div>
         </div>
 
