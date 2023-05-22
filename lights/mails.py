@@ -45,6 +45,7 @@ def sendTwoFactor(receiverMail, code, host):
         template = Template(f.read())
     html = template.render(code=code, host=host)
     html_message = MIMEText(html, "html")
+    html_message["from"] = "HomeControl <home.controller.hc@gmail.com>"
     html_message["to"] = receiverMail
     html_message["subject"] = "Activation HomeControl-Account"
 
@@ -66,6 +67,7 @@ def sendReset(receiverMail, userid, code, host):
         template = Template(f.read())
     html = template.render(userid=userid, code=code, host=host)
     html_message = MIMEText(html, "html")
+    html_message["from"] = "HomeControl <home.controller.hc@gmail.com>"
     html_message["to"] = receiverMail
     html_message["subject"] = "Password Recovery HomeControl-Account"
 

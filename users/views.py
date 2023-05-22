@@ -103,11 +103,11 @@ def manageAccount(request):
 @user_passes_test(active_check)
 def changePassword(request):
     if request.method == "POST":
-        form = ChangePasswordForm(request.POST)
+        form = ChangePasswordForm(request.user,request.POST)
         if form.is_valid():
             form.save()
-            password1 = form.cleaned_data["password1"]
-            password2 = form.cleaned_data["password2"]
+            password1 = form.cleaned_data["new_password1"]
+            password2 = form.cleaned_data["new_password2"]
             if password1 == password2:
                 request.user.set_password(password2)
                 request.user.save()
@@ -116,7 +116,6 @@ def changePassword(request):
             else:
                 messages.error(request, form.errors)
         else:
-            # ToDo
             messages.error(request, form.errors)
         return redirect("changePassword")
     else:
@@ -151,11 +150,11 @@ def deleteAccount(request):
 def passwordRecovery(request, userid, token):
     account = Account.objects.get(id=userid)
     if request.method == "POST":
-        form = ChangePasswordForm(request.user)
+        form = ChangePasswordForm(request.user,request.POST)
         if form.is_valid():
             form.save()
-            password1 = form.cleaned_data["password1"]
-            password2 = form.cleaned_data["password2"]
+            password1 = form.cleaned_data["new_password1"]
+            password2 = form.cleaned_data["new_password2"]
             if password1 == password2:
                 if password1 == None:
                     messages.error(request, ("Password is empty"))
@@ -167,7 +166,6 @@ def passwordRecovery(request, userid, token):
             else:
                 messages.error(request, ("Passwords did not match"))
         else:
-            # ToDo
             messages.error(request, form.errors)
     else:
         if account.secretToken != token:

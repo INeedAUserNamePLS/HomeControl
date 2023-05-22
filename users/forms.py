@@ -8,7 +8,7 @@ from users.models import Account
 
 class RegisterUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    
+
     class Meta:
         model = User
         fields = [
@@ -18,13 +18,15 @@ class RegisterUserForm(UserCreationForm):
             "password2",
         ]
 
+
 class ChangePasswordForm(SetPasswordForm):
     class Meta:
         model = User
         fields = [
-            "password1",
-            "password2",
+            "new_password1",
+            "new_password2",
         ]
+
 
 class TwoFactorForm(forms.ModelForm):
     class Meta:
