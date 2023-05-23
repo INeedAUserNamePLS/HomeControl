@@ -1,8 +1,6 @@
-import json
-import paho.mqtt.client as mqtt_client
+from lights import mqtt
 from . import utils
 from users.models import Account
-from . import mqtt
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.http import Http404
@@ -59,7 +57,7 @@ def detailLight(request, light_id):
                 "colour": light_instance.colour,
                 "brightness": light_instance.brightness,
             }
-            mqtt_client.Client.publish(mqtt.client, "lights", json.dumps(data))
+            mqtt.send(data)
             # redirect to a new URL:
             return redirect("index")
 
@@ -113,9 +111,9 @@ def editBroker(request):
             # process the data in form.cleaned_data as required
             broker = form.save(commit=False)
             broker.save()
-            saveBroker(form)
-            messages.success(request, ("Broker saved successfully"))
-
+            saveBroker(request, form)
+    #
+    broker_instance = Broker.objects.get(name="Broker")
     form = BrokerForm(
         initial={
             "server": broker_instance.server,
@@ -129,10 +127,13 @@ def editBroker(request):
         request, "broker/detail.html", {"form": form, "broker": broker_instance}
     )
 
+
 def testBroker():
     return True
 
-def saveBroker(form):
+
+def saveBroker(request, form):
+    mqtt.disconnect()
     data = {}
     data["server"] = form.cleaned_data["server"]
     data["port"] = form.cleaned_data["port"]
@@ -140,3 +141,9 @@ def saveBroker(form):
     data["user"] = form.cleaned_data["user"]
     data["password"] = form.cleaned_data["password"]
     utils.write_json("broker.json", data)
+    client = mqtt.start()
+    if client is not None:
+        messages.success(request, ("Broker connected sucessfully"))
+    else:
+        messages.success(request, ("Broker could not connect"))
+        mqtt.disconnect()
