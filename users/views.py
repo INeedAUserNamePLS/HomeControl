@@ -151,7 +151,7 @@ def deleteAccount(request):
 def passwordRecovery(request, userid, token):
     account = Account.objects.get(id=userid)
     #TODO
-    user = User.objects.get(id=account.id)
+    user = User.objects.get(account=account)
     if request.method == "POST":
         form = ChangePasswordForm(user,request.POST)
         if form.is_valid():

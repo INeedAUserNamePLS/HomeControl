@@ -9,7 +9,7 @@
     <div class="card-deck mb-3 text-center">
 
 
-        <div class="card mb-4 box-shadow" style="width: 40rem; margin-left: auto; margin-right: auto;">
+        <div class="card mb-4 box-shadow" style="width: 70%; margin-left: auto; margin-right: auto;">
             <div class="card-header">
                 <h5 class="card-title">User</h5>
             </div>
@@ -24,12 +24,10 @@
                     <div class="input-group mb-3">
                         <span for="{{ form.name.id_for_label }}" class="input-group-text w-25" id="password">Password</span>
                         <input type="password" class="form-control" name="password" aria-label="Password"
-                            aria-describedby="password" value="{{ account.password }}" disabled>
+                            aria-describedby="password" value=".........." disabled>
                     </div>
                     <a href="{% url 'index'%}" class="btn btn-lg btn-block btn-outline-secondary mb-3" role="button">Back</a>
-                    <button type="submit" class="btn btn-lg btn-block btn-outline-primary mb-3">Save
-                    </button>
-                    <a href="{% url 'changePassword'%}" class="btn btn-lg btn-block btn-outline-secondary mb-3" role="button">Change Password</a>
+                    <a href="{% url 'changePassword'%}" class="btn btn-lg btn-block btn-outline-primary mb-3" role="button">Change Password</a>
                 </form>
                 <p><a href="" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-bs-toggle="modal"
                     data-bs-target="#deleteModal">Delete Account</a></p>
