@@ -10,7 +10,7 @@
 
         {% for light in latest_light_list %}
             <div class="col">
-                <div class="card mb-4">
+                <div class="card mb-4 text-bg-light">
                     <div class="card-header">
                         <h5 class="card-title">{{ light.name }}</h5>
                     </div>
@@ -45,7 +45,7 @@
         {% endfor %}
 
         <div class="col">
-            <div class="card mb-4">
+            <div class="card mb-4 text-bg-light">
                 <a href="{% url 'addLight' %}" class="my-auto stretched-link nav-link text-dark"><h3>+</h3></a>
             </div>
         </div>
