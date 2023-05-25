@@ -1,6 +1,7 @@
 import secrets
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Account
@@ -149,8 +150,10 @@ def deleteAccount(request):
 
 def passwordRecovery(request, userid, token):
     account = Account.objects.get(id=userid)
+    #TODO
+    user = User.objects.get(id=account.id)
     if request.method == "POST":
-        form = ChangePasswordForm(request.user,request.POST)
+        form = ChangePasswordForm(user,request.POST)
         if form.is_valid():
             form.save()
             password1 = form.cleaned_data["new_password1"]
@@ -159,8 +162,8 @@ def passwordRecovery(request, userid, token):
                 if password1 == None:
                     messages.error(request, ("Password is empty"))
                 else:
-                    account.set_password(password2)
-                    account.save()
+                    user.set_password(password2)
+                    user.save()
                     messages.success(request, ("Password changed"))
                     return redirect("login")
             else:
@@ -171,7 +174,7 @@ def passwordRecovery(request, userid, token):
         if account.secretToken != token:
             messages.error(request, ("Wrong token"))
             redirect("resetMail")    
-    form = ChangePasswordForm(request.user)
+    form = ChangePasswordForm(account)
     return render(
         request,
         "account/resetPassword.html",
