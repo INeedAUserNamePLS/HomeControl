@@ -91,6 +91,7 @@ def deleteLight(request, light_id):
     # if this is a POST request we need to process the form data
     if request.method == "POST":
         Light.objects.filter(pk=light_id).delete()
+        messages.success(request, ("Light deleted sucessfully"))
     return redirect("index")
 
 
@@ -128,10 +129,6 @@ def editBroker(request):
     )
 
 
-def testBroker():
-    return True
-
-
 def saveBroker(request, form):
     mqtt.disconnect()
     data = {}
@@ -145,5 +142,5 @@ def saveBroker(request, form):
     if client is not None:
         messages.success(request, ("Broker connected sucessfully"))
     else:
-        messages.success(request, ("Broker could not connect"))
+        messages.error(request, ("Broker could not connect"))
         mqtt.disconnect()

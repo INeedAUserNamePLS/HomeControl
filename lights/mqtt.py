@@ -19,8 +19,7 @@ def on_connect(mqtt_client, userdata, flags, rc):
 
 
 def on_disconnect(mqtt_client, userdata, rc):
-    global flag_connected
-    flag_connected = 0
+    disconnect()
     print("Disconnected")
 
 
@@ -32,6 +31,7 @@ def disconnect():
     global client
     global flag_connected
     flag_connected = 0
+    client.loop_stop()
     client.disconnect()
 
 
@@ -47,13 +47,17 @@ def start():
     port = broker["port"]
     keepAlive = broker["keepAlive"] or 0
     client.username_pw_set(user, password)
-    if server is not None:
-        if port is None:
-            client.connect(host=server, keepalive=keepAlive)
-        else:
-            client.connect(host=server, port=port, keepalive=keepAlive)
-        mqtt.Client.loop_start(client)
-        return client
+    try:
+        if server is not None:
+            if port is None:
+                client.connect(host=server, keepalive=keepAlive)
+            else:
+                client.connect(host=server, port=port, keepalive=keepAlive)
+    except:
+        print("connection failed")
+        return None
+    mqtt.Client.loop_start(client)
+    return client
 
 
 def send(data):
