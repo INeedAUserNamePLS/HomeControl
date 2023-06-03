@@ -17,22 +17,22 @@
                 <form action="{% url 'register'%}" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text w-25"
+                        <span for="{{ form.name.id_for_label }}" class="d-flex justify-content-center input-group-text w-25"
                               id="username">Username</span>
                         <input type="text" class="form-control" name="username" aria-label="Username" aria-describedby="username" required>
                     </div>
                     <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text w-25"
+                        <span for="{{ form.name.id_for_label }}" class="d-flex justify-content-center input-group-text w-25"
                               id="email">Email</span>
                         <input type="email" class="form-control" name="email" aria-label="Email" aria-describedby="email" required>
                     </div>
                     <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text w-25"
+                        <span for="{{ form.name.id_for_label }}" class="d-flex justify-content-center input-group-text w-25"
                               id="password1">Password</span>
                         <input type="password" class="form-control" name="password1" aria-label="Password1" aria-describedby="password1" required>
                     </div>
                     <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text w-25"
+                        <span for="{{ form.name.id_for_label }}" class="d-flex justify-content-center input-group-text w-25"
                               id="password2">Repeat Password</span>
                         <input type="password" class="form-control" name="password2" aria-label="Password2" aria-describedby="password2" required >
                     </div>

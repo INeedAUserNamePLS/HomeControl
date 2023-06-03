@@ -15,12 +15,12 @@
     {% load static %}
     <div class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
-
+            
+            {% if user.is_authenticated %}
             <div class="fs-4">
                 <a href="{% url 'index'%}" class="nav-bar-brand text-white nav-link me-2">Home</a>
             </div>
-            
-            {% if user.is_authenticated %}
+
             <div class="">
                 <div class="nav-item dropdown me-2">
                     <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
@@ -36,6 +36,8 @@
                     </ul>
                 </div>
             </div>  
+            {% else %}
+            <div class="pt-md-5"></div>
             {% endif %}
 
         </div>

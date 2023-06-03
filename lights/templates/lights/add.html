@@ -17,7 +17,7 @@
                 <form action="{% url 'index'%}" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text w-25"
+                        <span for="{{ form.name.id_for_label }}" class="d-flex justify-content-center input-group-text w-25"
                               id="lamp_name">Lamp name</span>
                         <input type="text" class="form-control" name="name" aria-label="Lampname" aria-describedby="lamp_name" required>
                     </div>

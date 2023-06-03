@@ -17,12 +17,12 @@
                 <form action="{% url 'manageAccount'%}" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text w-25" id="username">Username</span>
+                        <span for="{{ form.name.id_for_label }}" class="d-flex justify-content-center input-group-text w-25" id="username">Username</span>
                         <input type="text" class="form-control" name="username" aria-label="Username"
                             aria-describedby="username" value="{{ account.username }}" disabled>
                     </div>
                     <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text w-25" id="password">Password</span>
+                        <span for="{{ form.name.id_for_label }}" class="d-flex justify-content-center input-group-text w-25" id="password">Password</span>
                         <input type="password" class="form-control" name="password" aria-label="Password"
                             aria-describedby="password" value=".........." disabled>
                     </div>

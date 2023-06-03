@@ -17,7 +17,7 @@
                 <form action="{% url 'resetMail'%}" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
-                        <span for="{{ form.name.id_for_label }}" class="input-group-text w-25"
+                        <span for="{{ form.name.id_for_label }}" class="d-flex justify-content-center input-group-text w-25"
                               id="email">Email</span>
                         <input type="email" class="form-control" name="email" aria-label="Email" aria-describedby="email" required>
                     </div>
